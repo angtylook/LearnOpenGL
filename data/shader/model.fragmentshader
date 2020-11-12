@@ -1,0 +1,245 @@
+#version 330 core
+
+// define
+#define kMaxPointLight 4
+#define kMaxDirectLight 1
+#define kMaxSpotLight 1
+
+// definition
+struct Material {
+	sampler2D diffuse;
+	sampler2D specular;
+	float shininess;
+};
+
+struct MaterialColor {
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+	float shininess;
+};
+
+struct DirectLight {
+	vec3 direction;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+struct PointLight {
+	vec3 position;
+
+	float constant;
+	float linear;
+	float quadratic;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+struct SpotLight {
+	vec3 position;
+	vec3 direction;
+
+	float inner_cut_off;
+	float outer_cut_off;
+
+	float constant;
+	float linear;
+	float quadratic;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+// flags
+uniform int enable_light = 1;
+uniform int enable_texture = 1;
+uniform int enable_material = 1;
+
+// light counter
+uniform int point_light_counter = 0;
+uniform int direct_light_counter = 0;
+uniform int spot_light_counter = 0;
+
+// lights
+uniform DirectLight direct_light[kMaxDirectLight];
+uniform PointLight point_light[kMaxPointLight];
+uniform SpotLight spot_light[kMaxSpotLight];
+
+// material
+uniform Material material;
+uniform MaterialColor material_color;
+
+// matrix
+uniform mat4 view;
+uniform mat4 model;
+
+// others uniform
+uniform vec3 view_position;
+
+// input from vertex shader
+in vec2 out_uv;
+in vec3 out_normal;
+in vec3 out_vertex;
+
+// Ouput color
+out vec4 final_color;
+
+void main_no_light() {
+	// Output color = red 
+	if(enable_material == 1 && enable_texture == 1)
+		final_color = texture(material.diffuse, out_uv);
+	else
+		final_color = material_color.diffuse;
+}
+
+vec4 CalcDirectLight(DirectLight light, vec3 normal, vec3 view) {
+	// return vec4(0.0, 0.0, 0.0, 1.0);
+	// point to light
+	vec3 direct_inverse = normalize(-light.direction);
+	// cos of normal and light direction
+	float diff = max(dot(normal, direct_inverse), 0.0);
+	// reflect vec
+	vec3 direct_reflect = reflect(-direct_inverse, normal);
+	float spec = 0.0;
+	vec4 ambient_color = vec4(0, 0, 0, 1);
+	vec4 diffuse_color = vec4(0, 0, 0, 1);
+	vec4 specular_color = vec4(0, 0, 0, 1);
+
+	if(enable_material == 1 && enable_texture == 1) {
+		diffuse_color = texture(material.diffuse, out_uv);
+		ambient_color = diffuse_color;
+		specular_color = texture(material.specular, out_uv);
+		spec = material.shininess;
+	}
+	else {
+		ambient_color = material_color.ambient;
+		diffuse_color = material_color.diffuse;
+		specular_color = material_color.specular;
+		spec = material_color.shininess;
+	}
+	spec = pow(max(dot(view, direct_reflect), 0.0), spec);
+	// combine result
+	vec4 ambient = light.ambient * ambient_color;
+	vec4 diffuse = light.diffuse * diff * diffuse_color;
+	vec4 specular = light.specular * spec * specular_color;
+	return ambient + diffuse + specular;
+}
+
+vec4 CalcPointLight(PointLight light, vec3 normal, vec3 pos, vec3 view) {
+	// return vec4(0.0, 0.0, 0.0, 1.0);
+	// point to light
+	vec3 direct_inverse = normalize(light.position - pos);
+	// cos of normal and light direction
+	float diff = max(dot(normal, direct_inverse), 0.0);
+	// reflect vec
+	vec3 direct_reflect = reflect(-direct_inverse, normal);
+	float spec = 0.0;
+	vec4 ambient_color = vec4(0, 0, 0, 1);
+	vec4 diffuse_color = vec4(0, 0, 0, 1);
+	vec4 specular_color = vec4(0, 0, 0, 1);
+
+	if(enable_material == 1 && enable_texture == 1) {
+		diffuse_color = texture(material.diffuse, out_uv);
+		ambient_color = diffuse_color;
+		specular_color = texture(material.specular, out_uv);
+		spec = material.shininess;
+	}
+	else {
+		ambient_color = material_color.ambient;
+		diffuse_color = material_color.diffuse;
+		specular_color = material_color.specular;
+		spec = material_color.shininess;
+	}
+	spec = pow(max(dot(view, direct_reflect), 0.0), spec);
+	// attenuation
+	float distance = length(light.position - pos);
+	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+	// combine result
+	vec4 ambient = light.ambient * ambient_color;
+	vec4 diffuse = light.diffuse * diff * diffuse_color;
+	vec4 specular = light.specular * spec * specular_color;
+	ambient *= attenuation;
+	diffuse *= attenuation;
+	specular *= attenuation;
+	return ambient + diffuse + specular;
+}
+
+vec4 CalcSpotLight(SpotLight light, vec3 normal, vec3 pos, vec3 view) {
+	//return vec4(0.0, 0.0, 0.0, 1.0);
+	// point to light
+	vec3 direct_inverse = normalize(light.position - pos);
+	// cos of normal and light direction
+	float diff = max(dot(normal, direct_inverse), 0.0);
+	// reflect vec
+	vec3 direct_reflect = reflect(-direct_inverse, normal);
+	float spec = 0.0;
+	vec4 ambient_color = vec4(0, 0, 0, 1);
+	vec4 diffuse_color = vec4(0, 0, 0, 1);
+	vec4 specular_color = vec4(0, 0, 0, 1);
+
+	if(enable_material == 1 && enable_texture == 1) {
+		diffuse_color = texture(material.diffuse, out_uv);
+		ambient_color = diffuse_color;
+		specular_color = texture(material.specular, out_uv);
+		spec = material.shininess;
+	}
+	else {
+		ambient_color = material_color.ambient;
+		diffuse_color = material_color.diffuse;
+		specular_color = material_color.specular;
+		spec = material_color.shininess;
+	}
+	spec = pow(max(dot(view, direct_reflect), 0.0), spec);
+	// attenuation
+	float distance = length(light.position - pos);
+	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+	// spot light intensity
+	float theta = dot(direct_inverse, normalize(-light.direction));
+	float epsilon = light.inner_cut_off - light.outer_cut_off;
+	float intensity = clamp((theta - light.outer_cut_off)/epsilon, 0.0, 1.0);
+	// combine result
+	vec4 ambient = light.ambient * ambient_color;
+	vec4 diffuse = light.diffuse * diff * diffuse_color;
+	vec4 specular = light.specular * spec * specular_color;
+	ambient *= attenuation * intensity;
+	diffuse *= attenuation * intensity;
+	specular *= attenuation * intensity;
+	return ambient + diffuse + specular;
+}
+
+void main_light() {
+	//main_no_light();
+	vec3 normal = normalize(out_normal);
+	// from vertex to view
+	vec3 view = normalize(view_position - out_vertex);
+	vec4 result = vec4(0);
+	// direct light
+	for(int i = 0; i < direct_light_counter; ++i) {
+		result += CalcDirectLight(direct_light[i], normal, view);
+	}
+	// point light
+	for(int j = 0; j < point_light_counter; ++j) {
+		result += CalcPointLight(point_light[j], normal, out_vertex, view);
+	}
+	// spot light
+	for(int k = 0; k < spot_light_counter; ++k) {
+		result += CalcSpotLight(spot_light[k], normal, out_vertex, view);
+	}
+	// out
+	final_color = result;
+}
+
+void main()
+{
+	if(enable_light == 1)
+		main_light();
+	else
+		main_no_light();
+}
+
+

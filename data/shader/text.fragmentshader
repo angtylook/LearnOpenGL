@@ -1,0 +1,22 @@
+#version 330 core
+
+in vec2 UV;
+
+// Ouput data
+out vec4 color;
+
+uniform sampler2D text;
+uniform vec4 text_color;
+uniform vec4 background;
+
+void main()
+{
+	// the R value of text sampler2D represet freetype font bitmap
+	// determine the alpha value of text_color
+	vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, UV).r);
+	if(sampled.a > 0.0)
+		color = text_color * sampled;
+	else
+		color = background;
+}
+

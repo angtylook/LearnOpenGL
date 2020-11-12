@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world name="hcl">
+	<entity name="boblamp" model="boblamp" scale="1.0 1.0 1.0" rotate="1 0 0 270" pos="-10 100 -10"/>
+	<entity name="winglass" model="wineglass" scale="2 2 2" pos="0 10 0" material="white"/>
+	<entity name="torus" model="torus" scale="5.0 5.0 5.0" pos="50 50 0" material="torus"/>
+	<entity name="red_cube" model="cube" scale="5.0 5.0 5.0" pos="50 5.0 -10" material="red" />
+	<entity name="container1" model="container" scale="7.0 7.0 7.0" pos="50 5.0 30" material="container" />
+	<entity name="container2" model="container" scale="10.0 10.0 10.0" pos="-50 10.0 -20" material="container" />
+	<entity name="container3" model="container" scale="4.0 4.0 4.0" pos="-30 5.0 20" material="container" />
+	<entity name="container4" model="container" scale="6.0 6.0 6.0" pos="-10 50.0 0" material="container" />
+	<entity name="xzplane" model="xzplane" scale="500.0 500.0 500.0" pos="0 0 0" material="ground"/>
+	<axis name="axis" scale="1000.0 1000 1000"/>
+	<camera name="camera" model="camera" scale="10 10 10" pos="0 0 0" material="green"/>
+	<light name="pointlight" model="sphere" scale="5.0 5.0 5.0" pos="0 100 0" light="point600" material="white"/>
+	<light name="directlight" model="sphere" scale="5.0 5.0 5.0" pos="100 100 100" light="direction" material="white"/>
+	<light name="spotlight" model="sphere" scale="3.0 3.0 3.0" pos="0 0 50" light="spot" material="white"/>
+</world>

@@ -1,0 +1,14 @@
+#version 330 core
+
+in vec2 UV;
+out vec4 color;
+
+uniform sampler2D image;
+
+void main()
+{
+  //vec3 image_color = vec3(texture(image, UV));
+  // float average = 0.2126 * image_color.r + 0.7152 * image_color.g + 0.0722 * image_color.b;
+  //color = vec4(average, average, average, 1.0);
+  color = texture(image, UV);
+}

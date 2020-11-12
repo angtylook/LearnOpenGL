@@ -1,0 +1,13 @@
+#version 330 core
+
+in vec2 UV;
+out vec4 color;
+
+uniform sampler2D image;
+uniform vec4 image_color;
+
+void main()
+{
+	color = image_color * texture(image, UV);
+}
+

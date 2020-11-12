@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<material name="default">
+	<phase name="color" ambientcolor="0.3 0.3 0.3" diffusecolor="1.0 0 0" specularcolor="1.0 0 0" shininess="32.0">
+		<pass ambientcolor="0.3 0.3 0.3" diffusecolor="1.0 0 0" specularcolor="1.0 0 0" shininess="32.0">
+			<sampler name="diffuse" texture="data/learngl/container2.png"/>
+			<sampler name="specular" texture="data/learngl/container2_specular.png"/>
+		</pass>
+	</phase>
+	<phase name="shadow">
+		<pass>
+		</pass>
+	</phase>
+	<pahse name="outline">
+	</pahse>
+</material>

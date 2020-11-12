@@ -1,0 +1,4 @@
+extract generate normals method.
+export method for lua.
+refine class model.
+use more modern c++ standard.

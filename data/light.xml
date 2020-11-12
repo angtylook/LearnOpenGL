@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lights>
+	<light name="point3250" type="point" ambient="0.2 0.2 0.2" diffuse="0.5 0.5 0.5" specular="1.0 1.0 1.0" pos="0 200 0" constant="1.0" linear="0.0014" quadratic="0.000007"/>
+	<light name="point600" type="point" ambient="0.2 0.2 0.2" diffuse="0.7 0.7 0.7" specular="1.0 1.0 1.0" pos="0 100 0" constant="1.0" linear="0.007" quadratic="0.0002"/>
+	<light name="point100" type="point" ambient="0.2 0.2 0.2" diffuse="0.5 0.5 0.5" specular="1.0 1.0 1.0" pos="0 200 0" constant="1.0" linear="0.045" quadratic="0.0075"/>
+	<light name="point50" type="point" ambient="0.2 0.2 0.2" diffuse="0.5 0.5 0.5" specular="1.0 1.0 1.0" pos="0 200 0" constant="1.0" linear="0.09" quadratic="0.032"/>
+	<light name="direction" type="direction" ambient="0.2 0.2 0.2" diffuse="0.4 0.4 0.4" specular="0.7 0.7 0.7" direction="-1 -1 -1" />
+	<light name="spot" type="spot" ambient="0.2 0.2 0.2" diffuse="1.0 1.0 1.0" specular="1.0 1.0 1.0" pos="0 0 50" innercut="8" outercut="15" constant="1.0" linear="0.0014" quadratic="0.000007" direction="0 0 -1"/>
+</lights>

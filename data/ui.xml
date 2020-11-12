@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<desktop name="desktop">
+	<widget name="girl" x="0" y="0" width="373" height="213" texture="data/pic/cpp.png">
+		<label name="girl_name" x="20" y="20" text="python cpp" color="1.0 0.0 0.0 1.0" />
+	</widget>
+	<button name="button" x="200" y="200" width="200" height="40">
+		<label name="button_text" x="210" y="210" text="button" color="0.0 1.0 0.0 1.0" />
+	</button>
+</desktop>

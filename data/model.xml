@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<models>
+	<!--MD5-->
+	<model name="boblamp" file="data/Boblamp/boblampclean" type="md5"/>
+	<!--Obj-->
+	<model name="sphere" file="data/obj/sphere.obj" type="obj"/>
+	<model name="torus" file="data/obj/torus.obj" type="obj"/>
+	<model name="camera" file="data/obj/camera.obj" type="obj"/>
+	<model name="xzplane" file="data/obj/xz.obj" type="obj"/>
+	<model name="cube" file="data/obj/cube.obj" type="obj"/>
+	<model name="container" file="data/obj/container.obj" type="obj"/>
+	<!--swp-->
+	<model name="wineglass" file="data/mit/swp/wineglass.swp" type="swp"/>
+</models>

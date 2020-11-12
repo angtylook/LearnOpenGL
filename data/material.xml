@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<materials>
+	<material name="red" ambientcolor="0.3 0.3 0.3" diffusecolor="1.0 0 0" specularcolor="1.0 0 0" shininess="32.0"/>
+	<material name="white" ambientcolor="0.3 0.3 0.3" diffusecolor="0.8 0.8 0.8" specularcolor="1.0 1.0 1.0" shininess="32.0"/>
+	<material name="green" ambientcolor="0.3 0.3 0.3" diffusecolor="0 1 0" specularcolor="0 1 0" shininess="32.0"/>
+	<material name="ground" diffuse="data/learngl/wood.png" specular="data/learngl/wood.png" shininess="32.0"/>
+	<material name="torus" ambientcolor="0.3 0.3 0.3" diffusecolor="0.5 0.5 0.7" specularcolor="0.5 0.5 0.7" shininess="32.0"/>
+	<material name="boy" ambientcolor="0.3 0.3 0.3" diffusecolor="0.9 0.3 0.8" specularcolor="0.9 0.3 0.8" shininess="32.0"/>
+	<material name="container" diffuse="data/learngl/container2.png" specular="data/learngl/container2_specular.png" shininess="32"/>
+</materials>
